@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'AESStream_Example' do
+  pod 'AESStream', :path => '../'
+
+  target 'AESStream_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
