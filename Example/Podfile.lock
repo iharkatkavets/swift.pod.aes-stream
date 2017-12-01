@@ -1,16 +1,29 @@
 PODS:
   - AESStream (0.1.0)
+  - CleanTests (0.1.0)
+  - SwiftLint (0.24.0)
 
 DEPENDENCIES:
   - AESStream (from `../`)
+  - CleanTests (from `https://github.com/igorkotkovets/pod.swift.clean-tests.git`)
+  - SwiftLint
 
 EXTERNAL SOURCES:
   AESStream:
     :path: ../
+  CleanTests:
+    :git: https://github.com/igorkotkovets/pod.swift.clean-tests.git
+
+CHECKOUT OPTIONS:
+  CleanTests:
+    :commit: 1551d200108c985e2ba840626b8e42502033fafd
+    :git: https://github.com/igorkotkovets/pod.swift.clean-tests.git
 
 SPEC CHECKSUMS:
   AESStream: 0111b7f28036a43f22560b7a242bddbdf9cb6c39
+  CleanTests: e2e362a43f787a346c023b93a3b2471f87481aab
+  SwiftLint: a014c92b4664e8b13f380f8640a51bb1733778ba
 
-PODFILE CHECKSUM: b4abe9512de54afe8453c365835557c98d7a61b2
+PODFILE CHECKSUM: d98e71878635d6074ae1e4a3490e3e0210d9b1e3
 
 COCOAPODS: 1.3.1
