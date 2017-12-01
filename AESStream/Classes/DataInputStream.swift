@@ -7,7 +7,7 @@
 
 import Foundation
 
-public class DataInputStream: SalsaCipher.InputStream {
+public class DataInputStream: InputStream {
     var bufferOffset = 0
     var data: Data
 

@@ -7,7 +7,7 @@
 
 import Foundation
 
-public class FileInputStream: SalsaCipher.InputStream {
+public class FileInputStream: InputStream {
     let fileHandle: FileHandle
     var eofReached = false
 
