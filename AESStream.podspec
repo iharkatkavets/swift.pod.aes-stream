@@ -32,8 +32,8 @@ TODO: Add long description of the pod here.
   
   s.source_files = 'AESStream/Classes/**/*.swift'
   s.pod_target_xcconfig = { 'SWIFT_VERSION' => '3.2' }
-  s.preserve_paths = 'AESStream/Classes/CCommonCrypto/module.modulemap'
-  s.xcconfig = { 'SWIFT_INCLUDE_PATHS' => '$(PODS_TARGET_SRCROOT)/AESStream/Classes/CCommonCrypto' }
+  s.preserve_paths = 'AESStream/Classes/CommonCryptoSwift/module.modulemap'
+  s.xcconfig = { 'SWIFT_INCLUDE_PATHS' => '$(PODS_TARGET_SRCROOT)/AESStream/Classes/CommonCryptoSwift' }
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'

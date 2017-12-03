@@ -16,6 +16,10 @@
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
 		9196019E25FEE39257511293 /* Pods_AESStream_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FC53F0E91643DA8AF5889D3 /* Pods_AESStream_Tests.framework */; };
 		D80EB8561FD1E8D4003C607D /* StdTypesExtensionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80EB8551FD1E8D4003C607D /* StdTypesExtensionsTests.swift */; };
+		D82FE62F1FD42E2500D1F198 /* AesInputStreamTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82FE62E1FD42E2500D1F198 /* AesInputStreamTests.swift */; };
+		D82FE6311FD438F400D1F198 /* loremipsum.txt in Resources */ = {isa = PBXBuildFile; fileRef = D82FE6301FD438F400D1F198 /* loremipsum.txt */; };
+		D82FE6331FD43A1200D1F198 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82FE6321FD43A1200D1F198 /* Constants.swift */; };
+		D82FE6371FD45E0500D1F198 /* encryptedtext.aes in Resources */ = {isa = PBXBuildFile; fileRef = D82FE6361FD45E0500D1F198 /* encryptedtext.aes */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +53,10 @@
 		CEF70E601E33FAB2FD3A52E0 /* Pods_AESStream_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AESStream_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5368C6B759BB36FF5C56C99 /* Pods-AESStream_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AESStream_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AESStream_Example/Pods-AESStream_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		D80EB8551FD1E8D4003C607D /* StdTypesExtensionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StdTypesExtensionsTests.swift; sourceTree = "<group>"; };
+		D82FE62E1FD42E2500D1F198 /* AesInputStreamTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AesInputStreamTests.swift; sourceTree = "<group>"; };
+		D82FE6301FD438F400D1F198 /* loremipsum.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = loremipsum.txt; sourceTree = "<group>"; };
+		D82FE6321FD43A1200D1F198 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		D82FE6361FD45E0500D1F198 /* encryptedtext.aes */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; path = encryptedtext.aes; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +127,10 @@
 			children = (
 				607FACEB1AFB9204008FA782 /* Tests.swift */,
 				D80EB8551FD1E8D4003C607D /* StdTypesExtensionsTests.swift */,
+				D82FE62E1FD42E2500D1F198 /* AesInputStreamTests.swift */,
+				D82FE6321FD43A1200D1F198 /* Constants.swift */,
+				D82FE6301FD438F400D1F198 /* loremipsum.txt */,
+				D82FE6361FD45E0500D1F198 /* encryptedtext.aes */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
 			);
 			path = Tests;
@@ -263,6 +275,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D82FE6311FD438F400D1F198 /* loremipsum.txt in Resources */,
+				D82FE6371FD45E0500D1F198 /* encryptedtext.aes in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -389,8 +403,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D82FE62F1FD42E2500D1F198 /* AesInputStreamTests.swift in Sources */,
 				607FACEC1AFB9204008FA782 /* Tests.swift in Sources */,
 				D80EB8561FD1E8D4003C607D /* StdTypesExtensionsTests.swift in Sources */,
+				D82FE6331FD43A1200D1F198 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -6,79 +6,91 @@
 //
 
 import Foundation
-import CCommonCrypto
-
-//
-//  KeeAesInputStream.swift
-//  Pods
-//
-//  Created by Igor Kotkovets on 8/7/17.
-//
-//
-
-import Foundation
-
+import CommonCryptoSwift
 
 public enum AesInputStreamError: Error {
-    case cryptorCreate
-    case decryptData
+    case invalidKeySize
+    case creatingCryptorError
+    case decryptingDataError
+    case finishingDecriptingError
 }
 
-class AesInputStream: InputStream {
+public class AesInputStream: InputStream {
     static let aesBufferSize = 512*1024
     let inputStream: InputStream
     var cryptorRef: CCCryptorRef?
     var bufferSize: Int = 0
     var bufferOffset: Int = 0
     var eofReached = false
-    var outputBuffer = Data(repeating: 0, count: aesBufferSize)
+    var inputBuffer: UnsafeMutablePointer<UInt8>
+    var outputBuffer: UnsafeMutablePointer<UInt8>
 
-    init(with inputStream: InputStream, key: Data, initVector: Data) throws {
+    public init(with inputStream: InputStream, key: Data, vector: Data) throws {
+        guard key.count == 32 && vector.count == 16 else {
+            throw AesInputStreamError.invalidKeySize
+        }
+
         self.inputStream = inputStream
 
-        let keyPtr = key.withUnsafeBytes { UnsafeRawPointer($0) }
-        let ivPtr = initVector.withUnsafeBytes { UnsafeRawPointer($0) }
-        let result: CCCryptorStatus = CCCryptorCreate(CCOperation(kCCDecrypt),
+        var keyPtr = UnsafeMutablePointer<UInt8>.allocate(capacity: key.count)
+        key.copyBytes(to: keyPtr, count: key.count)
+
+        let vectorPtr = UnsafeMutablePointer<UInt8>.allocate(capacity: vector.count)
+        vector.copyBytes(to: vectorPtr, count: vector.count)
+
+        // CBC mode is selected by the absence of the kCCOptionECBMode bit in the options flags
+        let result: CCCryptorStatus = CCCryptorCreate(CCOperation(kCCEncrypt),
                                                       CCAlgorithm(kCCAlgorithmAES),
                                                       CCOptions(kCCOptionPKCS7Padding),
-                                                      keyPtr,
+                                                      &keyPtr,
                                                       key.count,
-                                                      ivPtr,
+                                                      vectorPtr,
                                                       &cryptorRef)
         guard result == CCCryptorStatus(kCCSuccess) else {
-            throw AesInputStreamError.cryptorCreate
+            print(result.description())
+            throw AesInputStreamError.creatingCryptorError
         }
+
+        keyPtr.deallocate(capacity: key.count)
+        vectorPtr.deallocate(capacity: vector.count)
+
+        inputBuffer = UnsafeMutablePointer<UInt8>.allocate(capacity: AesInputStream.aesBufferSize)
+        outputBuffer = UnsafeMutablePointer<UInt8>.allocate(capacity: AesInputStream.aesBufferSize)
     }
 
-    var hasBytesAvailable: Bool {
-        return !eofReached
+    deinit {
+        inputBuffer.deallocate(capacity: AesInputStream.aesBufferSize)
+        outputBuffer.deallocate(capacity: AesInputStream.aesBufferSize)
     }
 
-    func read(_ buffer: UnsafeMutablePointer<UInt8>, maxLength len: Int) -> Int {
-        var remaining = length
+    public var hasBytesAvailable: Bool {
+        return (!eofReached && bufferOffset > 0) == false
+    }
+
+    public func read(_ buffer: UnsafeMutablePointer<UInt8>, maxLength len: Int) -> Int {
+        var remaining = len
         var offset = 0
-        var length = 0
-        var outputData = Data()
+        var actualLength = 0
 
         while remaining > 0 {
             if bufferOffset >= bufferSize {
                 do {
                     let couldDecrypt = try decryptChunk()
                     if couldDecrypt == false {
-                        return outputData
+                        return len - remaining
                     }
                 } catch {}
             }
 
-            length = min(remaining, bufferSize-bufferOffset)
-            outputData.append(outputBuffer.subdata(in: bufferOffset..<bufferOffset+length))
+            actualLength = min(remaining, bufferSize-bufferOffset)
+            (buffer+offset).initialize(from: outputBuffer+bufferOffset, count: actualLength)
 
-            bufferOffset += length
-            offset += length
-            remaining -= length
+            bufferOffset += actualLength
+            offset += actualLength
+            remaining -= actualLength
         }
 
-        return outputData
+        return offset
     }
 
     func decryptChunk() throws -> Bool {
@@ -89,32 +101,30 @@ class AesInputStream: InputStream {
         bufferSize = 0
         bufferOffset = 0
         var decryptedBytes = 0
-
-        let data = inputStream.readData(ofLength: AesInputStream.aesBufferSize)
-        let dataLength = data.count
-        let outputBufferPointer = outputBuffer.withUnsafeMutableBytes { UnsafeMutableRawPointer(mutating: $0) }
-        if dataLength > 0 {
-            let dataPointer = data.withUnsafeBytes { UnsafeRawPointer($0) }
+        let readLength = inputStream.read(inputBuffer, maxLength: AesInputStream.aesBufferSize)
+        if readLength > 0 {
             let cryptorStatus = CCCryptorUpdate(cryptorRef,
-                                                dataPointer,
-                                                dataLength,
-                                                outputBufferPointer,
+                                                inputBuffer,
+                                                readLength,
+                                                outputBuffer,
                                                 AesInputStream.aesBufferSize,
                                                 &decryptedBytes)
             guard cryptorStatus == CCCryptorStatus(kCCSuccess) else {
-                throw AesInputStreamError.decryptData
+                print(cryptorStatus.description())
+                throw AesInputStreamError.decryptingDataError
             }
 
             bufferSize += decryptedBytes
         }
 
-        if dataLength < AesInputStream.aesBufferSize {
+        if readLength < AesInputStream.aesBufferSize {
             let cryptorStatus = CCCryptorFinal(cryptorRef,
-                                               outputBufferPointer+decryptedBytes,
+                                               outputBuffer+decryptedBytes,
                                                AesInputStream.aesBufferSize - decryptedBytes,
                                                &decryptedBytes)
             guard cryptorStatus == CCCryptorStatus(kCCSuccess) else {
-                throw AesInputStreamError.decryptData
+                print(cryptorStatus.description())
+                throw AesInputStreamError.finishingDecriptingError
             }
 
             eofReached = true
@@ -124,3 +134,5 @@ class AesInputStream: InputStream {
         return true
     }
 }
+
+
