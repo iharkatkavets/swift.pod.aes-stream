@@ -29,12 +29,11 @@ TODO: Add long description of the pod here.
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
   s.ios.deployment_target = '8.0'
-
-  s.source_files = 'AESStream/Classes/**/*'
   
-  # s.resource_bundles = {
-  #   'AESStream' => ['AESStream/Assets/*.png']
-  # }
+  s.source_files = 'AESStream/Classes/**/*.swift'
+  s.pod_target_xcconfig = { 'SWIFT_VERSION' => '3.2' }
+  s.preserve_paths = 'AESStream/Classes/CCommonCrypto/module.modulemap'
+  s.xcconfig = { 'SWIFT_INCLUDE_PATHS' => '$(PODS_TARGET_SRCROOT)/AESStream/Classes/CCommonCrypto' }
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'

@@ -20,7 +20,7 @@ CHECKOUT OPTIONS:
     :git: https://github.com/igorkotkovets/pod.swift.clean-tests.git
 
 SPEC CHECKSUMS:
-  AESStream: 0111b7f28036a43f22560b7a242bddbdf9cb6c39
+  AESStream: 9fd291914f44d7322f99689c175f7da6d029942e
   CleanTests: e2e362a43f787a346c023b93a3b2471f87481aab
   SwiftLint: a014c92b4664e8b13f380f8640a51bb1733778ba
 
