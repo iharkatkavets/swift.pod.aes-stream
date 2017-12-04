@@ -10,11 +10,13 @@ import Foundation
 
 struct Constants {
     static var plainTextFileUrl: URL = {
-        return Bundle(for: AesInputStreamTests.self).url(forResource: "loremipsum", withExtension: "txt")!
+        return Bundle(for: AesInputStreamTests.self).url(forResource: "plaintext", withExtension: "txt")!
     }()
     static var cipherTextFileUrl: URL = {
         return Bundle(for: AesInputStreamTests.self).url(forResource: "encryptedtext", withExtension: "aes")!
     }()
-    static var key: Data = Data(count: 32)
-    static var vector: Data = Data(count: 16)
+    static let keyString: String = "00000000000000000000000000000000"
+    static var key: Data = keyString.data(using: .utf8)!
+    static let vectorString: String = "0000000000000000"
+    static var vector: Data = vectorString.data(using: .utf8)!
 }

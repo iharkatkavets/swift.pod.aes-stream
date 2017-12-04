@@ -35,7 +35,7 @@ public class AesOutputStream: OutputStream {
         vector.copyBytes(to: vectorPtr, count: vector.count)
 
         // CBC mode is selected by the absence of the kCCOptionECBMode bit in the options flags
-        let result: CCCryptorStatus = CCCryptorCreate(CCOperation(kCCDecrypt),
+        let result: CCCryptorStatus = CCCryptorCreate(CCOperation(kCCEncrypt),
                                                       CCAlgorithm(kCCAlgorithmAES),
                                                       CCOptions(kCCOptionPKCS7Padding),
                                                       &keyPtr,

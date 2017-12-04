@@ -32,17 +32,17 @@ public class AesInputStream: InputStream {
 
         self.inputStream = inputStream
 
-        var keyPtr = UnsafeMutablePointer<UInt8>.allocate(capacity: key.count)
+        let keyPtr = UnsafeMutablePointer<UInt8>.allocate(capacity: key.count)
         key.copyBytes(to: keyPtr, count: key.count)
 
         let vectorPtr = UnsafeMutablePointer<UInt8>.allocate(capacity: vector.count)
         vector.copyBytes(to: vectorPtr, count: vector.count)
 
         // CBC mode is selected by the absence of the kCCOptionECBMode bit in the options flags
-        let result: CCCryptorStatus = CCCryptorCreate(CCOperation(kCCEncrypt),
-                                                      CCAlgorithm(kCCAlgorithmAES),
+        let result: CCCryptorStatus = CCCryptorCreate(CCOperation(kCCDecrypt),
+                                                      CCAlgorithm(kCCAlgorithmAES128),
                                                       CCOptions(kCCOptionPKCS7Padding),
-                                                      &keyPtr,
+                                                      keyPtr,
                                                       key.count,
                                                       vectorPtr,
                                                       &cryptorRef)
@@ -59,12 +59,13 @@ public class AesInputStream: InputStream {
     }
 
     deinit {
+
         inputBuffer.deallocate(capacity: AesInputStream.aesBufferSize)
         outputBuffer.deallocate(capacity: AesInputStream.aesBufferSize)
     }
 
     public var hasBytesAvailable: Bool {
-        return (!eofReached && bufferOffset > 0) == false
+        return !eofReached && bufferOffset < bufferSize
     }
 
     public func read(_ buffer: UnsafeMutablePointer<UInt8>, maxLength len: Int) -> Int {

@@ -13,11 +13,10 @@
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
-		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
 		9196019E25FEE39257511293 /* Pods_AESStream_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FC53F0E91643DA8AF5889D3 /* Pods_AESStream_Tests.framework */; };
 		D80EB8561FD1E8D4003C607D /* StdTypesExtensionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80EB8551FD1E8D4003C607D /* StdTypesExtensionsTests.swift */; };
 		D82FE62F1FD42E2500D1F198 /* AesInputStreamTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82FE62E1FD42E2500D1F198 /* AesInputStreamTests.swift */; };
-		D82FE6311FD438F400D1F198 /* loremipsum.txt in Resources */ = {isa = PBXBuildFile; fileRef = D82FE6301FD438F400D1F198 /* loremipsum.txt */; };
+		D82FE6311FD438F400D1F198 /* plaintext.txt in Resources */ = {isa = PBXBuildFile; fileRef = D82FE6301FD438F400D1F198 /* plaintext.txt */; };
 		D82FE6331FD43A1200D1F198 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82FE6321FD43A1200D1F198 /* Constants.swift */; };
 		D82FE6371FD45E0500D1F198 /* encryptedtext.aes in Resources */ = {isa = PBXBuildFile; fileRef = D82FE6361FD45E0500D1F198 /* encryptedtext.aes */; };
 /* End PBXBuildFile section */
@@ -45,7 +44,6 @@
 		607FACDF1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		607FACE51AFB9204008FA782 /* AESStream_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AESStream_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		8E2A1B78474E07C437E08CED /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		9B25E6FFE707BEB476048036 /* Pods-AESStream_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AESStream_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-AESStream_Example/Pods-AESStream_Example.release.xcconfig"; sourceTree = "<group>"; };
 		A8671DB21991F250D2EC8630 /* Pods-AESStream_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AESStream_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AESStream_Tests/Pods-AESStream_Tests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -54,7 +52,7 @@
 		D5368C6B759BB36FF5C56C99 /* Pods-AESStream_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AESStream_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AESStream_Example/Pods-AESStream_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		D80EB8551FD1E8D4003C607D /* StdTypesExtensionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StdTypesExtensionsTests.swift; sourceTree = "<group>"; };
 		D82FE62E1FD42E2500D1F198 /* AesInputStreamTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AesInputStreamTests.swift; sourceTree = "<group>"; };
-		D82FE6301FD438F400D1F198 /* loremipsum.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = loremipsum.txt; sourceTree = "<group>"; };
+		D82FE6301FD438F400D1F198 /* plaintext.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = plaintext.txt; sourceTree = "<group>"; };
 		D82FE6321FD43A1200D1F198 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		D82FE6361FD45E0500D1F198 /* encryptedtext.aes */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; path = encryptedtext.aes; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -125,11 +123,10 @@
 		607FACE81AFB9204008FA782 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				607FACEB1AFB9204008FA782 /* Tests.swift */,
 				D80EB8551FD1E8D4003C607D /* StdTypesExtensionsTests.swift */,
 				D82FE62E1FD42E2500D1F198 /* AesInputStreamTests.swift */,
 				D82FE6321FD43A1200D1F198 /* Constants.swift */,
-				D82FE6301FD438F400D1F198 /* loremipsum.txt */,
+				D82FE6301FD438F400D1F198 /* plaintext.txt */,
 				D82FE6361FD45E0500D1F198 /* encryptedtext.aes */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
 			);
@@ -275,7 +272,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D82FE6311FD438F400D1F198 /* loremipsum.txt in Resources */,
+				D82FE6311FD438F400D1F198 /* plaintext.txt in Resources */,
 				D82FE6371FD45E0500D1F198 /* encryptedtext.aes in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -404,7 +401,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D82FE62F1FD42E2500D1F198 /* AesInputStreamTests.swift in Sources */,
-				607FACEC1AFB9204008FA782 /* Tests.swift in Sources */,
 				D80EB8561FD1E8D4003C607D /* StdTypesExtensionsTests.swift in Sources */,
 				D82FE6331FD43A1200D1F198 /* Constants.swift in Sources */,
 			);
