@@ -23,8 +23,7 @@ class AesInputStreamTests: XCTestCase {
             var readBytes = 0
             repeat {
                 readBytes = aesStream.read(stringBytes, maxLength: bufferSize)
-                let data = Data(bytes: stringBytes, count: readBytes)
-                let string = String(data: data, encoding: .utf8)
+                let string = String(bytesNoCopy: stringBytes, length: readBytes, encoding: .utf8, freeWhenDone: false)
                 print("string: \(String(describing: string)) ")
 
             } while aesStream.hasBytesAvailable

@@ -22,8 +22,8 @@ public class AesInputStream: InputStream {
     var bufferSize: Int = 0
     var bufferOffset: Int = 0
     var eofReached = false
-    var inputBuffer: UnsafeMutablePointer<UInt8>
-    var outputBuffer: UnsafeMutablePointer<UInt8>
+    var inputBuffer = UnsafeMutablePointer<UInt8>.allocate(capacity: AesInputStream.aesBufferSize)
+    var outputBuffer = UnsafeMutablePointer<UInt8>.allocate(capacity: AesInputStream.aesBufferSize)
 
     public init(with inputStream: InputStream, key: Data, vector: Data) throws {
         guard key.count == 32 && vector.count == 16 else {
@@ -53,13 +53,9 @@ public class AesInputStream: InputStream {
 
         keyPtr.deallocate(capacity: key.count)
         vectorPtr.deallocate(capacity: vector.count)
-
-        inputBuffer = UnsafeMutablePointer<UInt8>.allocate(capacity: AesInputStream.aesBufferSize)
-        outputBuffer = UnsafeMutablePointer<UInt8>.allocate(capacity: AesInputStream.aesBufferSize)
     }
 
     deinit {
-
         inputBuffer.deallocate(capacity: AesInputStream.aesBufferSize)
         outputBuffer.deallocate(capacity: AesInputStream.aesBufferSize)
     }
