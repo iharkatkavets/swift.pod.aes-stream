@@ -31,11 +31,15 @@ TODO: Add long description of the pod here.
   s.ios.deployment_target = '8.0'
   
   s.source_files = 'AESStream/Classes/**/*.swift'
-  s.pod_target_xcconfig = { 'SWIFT_VERSION' => '3.2' }
-  s.preserve_paths = 'AESStream/Classes/CommonCryptoSwift/module.modulemap'
-  s.xcconfig = { 'SWIFT_INCLUDE_PATHS' => '$(PODS_TARGET_SRCROOT)/AESStream/Classes/CommonCryptoSwift' }
-
-  # s.public_header_files = 'Pod/Classes/**/*.h'
-  # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
+  s.pod_target_xcconfig = {
+    'SWIFT_VERSION' => '3.2',
+    'SWIFT_INCLUDE_PATHS[sdk=macosx*]'           => '$(PODS_TARGET_SRCROOT)/AESStream/Classes/CommonCryptoSwift/macosx.modulemap',
+    'SWIFT_INCLUDE_PATHS[sdk=iphoneos*]'         => '$(PODS_TARGET_SRCROOT)/AESStream/Classes/CommonCryptoSwift/iphoneos.modulemap',
+    'SWIFT_INCLUDE_PATHS[sdk=iphonesimulator*]'  => '$(PODS_TARGET_SRCROOT)/AESStream/Classes/CommonCryptoSwift/iphonesimulator.modulemap',
+    'SWIFT_INCLUDE_PATHS[sdk=appletvos*]'        => '$(PODS_TARGET_SRCROOT)/AESStream/Classes/CommonCryptoSwift/appletvos.modulemap',
+    'SWIFT_INCLUDE_PATHS[sdk=appletvsimulator*]' => '$(PODS_TARGET_SRCROOT)/AESStream/Classes/CommonCryptoSwift/appletvsimulator.modulemap',
+    'SWIFT_INCLUDE_PATHS[sdk=watchos*]'          => '$(PODS_TARGET_SRCROOT)/AESStream/Classes/CommonCryptoSwift/watchos.modulemap',
+    'SWIFT_INCLUDE_PATHS[sdk=watchsimulator*]'   => '$(PODS_TARGET_SRCROOT)/AESStream/Classes/CommonCryptoSwift/watchsimulator.modulemap'
+  }
+  s.preserve_paths = 'AESStream/Classes/CommonCryptoSwift/*.modulemap' 
 end
