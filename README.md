@@ -1,6 +1,5 @@
 # AESStream
 
-[![CI Status](http://img.shields.io/travis/Igor Kotkovets/AESStream.svg?style=flat)](https://travis-ci.org/Igor Kotkovets/AESStream)
 [![Version](https://img.shields.io/cocoapods/v/AESStream.svg?style=flat)](http://cocoapods.org/pods/AESStream)
 [![License](https://img.shields.io/cocoapods/l/AESStream.svg?style=flat)](http://cocoapods.org/pods/AESStream)
 [![Platform](https://img.shields.io/cocoapods/p/AESStream.svg?style=flat)](http://cocoapods.org/pods/AESStream)
@@ -17,7 +16,11 @@ AESStream is available through [CocoaPods](http://cocoapods.org). To install
 it, simply add the following line to your Podfile:
 
 ```ruby
-pod 'AESStream'
+pod 'AESStream', :git => 'https://github.com/igorkotkovets/swift.pod.aes-stream.git', :tag => '0.1.1'
+```
+or 
+```ruby
+pod 'AESStream', :git => 'https://github.com/igorkotkovets/swift.pod.aes-stream.git', :branch => 'master'
 ```
 
 ## Author
