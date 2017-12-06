@@ -86,9 +86,7 @@ public extension UnsafeMutablePointer where Pointee: FixedWidthInteger {
 
         return true
     }
-}
 
-public extension UnsafeMutablePointer where Pointee: FixedWidthInteger {
     public func compare(with buffer: UnsafePointer<Pointee>, size: Int) -> Bool {
         for i in 0..<size {
             if self[i] != buffer[i] {
@@ -110,9 +108,7 @@ public extension UnsafePointer where Pointee: FixedWidthInteger {
 
         return true
     }
-}
 
-public extension UnsafePointer where Pointee: FixedWidthInteger {
     public func compare(with buffer: UnsafeMutablePointer<Pointee>, size: Int) -> Bool {
         for i in 0..<size {
             if self[i] != buffer[i] {

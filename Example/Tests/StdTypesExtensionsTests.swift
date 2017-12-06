@@ -34,4 +34,24 @@ class StdTypesExtensionsTests: XCTestCase {
         buffer2.initialize(to: 2, count: 100)
         assertFalse(buffer1.compare(with: buffer2, size: 100))
     }
+
+    func testThatReturnsTrueForEqualMemoryDifferentTypes() {
+        let data = Data(repeating: 1, count: 100)
+        data.withUnsafeBytes { (bytes: UnsafePointer<UInt8>) -> Void in
+            let buffer2 = UnsafeMutablePointer<UInt8>.allocate(capacity: 100)
+            buffer2.initialize(to: 1, count: 100)
+            assertTrue(bytes.compare(with: buffer2, size: 100))
+            assertTrue(buffer2.compare(with: bytes, size: 100))
+        }
+    }
+
+    func testThatReturnsFalseForDifferentMemoryDifferentTypes() {
+        let data = Data(repeating: 2, count: 100)
+        data.withUnsafeBytes { (bytes: UnsafePointer<UInt8>) -> Void in
+            let buffer2 = UnsafeMutablePointer<UInt8>.allocate(capacity: 100)
+            buffer2.initialize(to: 1, count: 100)
+            assertFalse(bytes.compare(with: buffer2, size: 100))
+            assertFalse(buffer2.compare(with: bytes, size: 100))
+        }
+    }
 }
