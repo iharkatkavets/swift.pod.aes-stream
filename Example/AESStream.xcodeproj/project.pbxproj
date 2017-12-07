@@ -15,6 +15,9 @@
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		9196019E25FEE39257511293 /* Pods_AESStream_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FC53F0E91643DA8AF5889D3 /* Pods_AESStream_Tests.framework */; };
 		D80EB8561FD1E8D4003C607D /* StdTypesExtensionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80EB8551FD1E8D4003C607D /* StdTypesExtensionsTests.swift */; };
+		D81959DA1FD7FFCB005E6E25 /* FileOutputStreamTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81959D91FD7FFCB005E6E25 /* FileOutputStreamTests.swift */; };
+		D81959DC1FD801A9005E6E25 /* URL+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81959DB1FD801A9005E6E25 /* URL+Extensions.swift */; };
+		D81959DD1FD802C1005E6E25 /* URL+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81959DB1FD801A9005E6E25 /* URL+Extensions.swift */; };
 		D82FE62F1FD42E2500D1F198 /* AesInputStreamTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82FE62E1FD42E2500D1F198 /* AesInputStreamTests.swift */; };
 		D82FE6311FD438F400D1F198 /* plaintext.txt in Resources */ = {isa = PBXBuildFile; fileRef = D82FE6301FD438F400D1F198 /* plaintext.txt */; };
 		D82FE6331FD43A1200D1F198 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82FE6321FD43A1200D1F198 /* Constants.swift */; };
@@ -51,6 +54,8 @@
 		CEF70E601E33FAB2FD3A52E0 /* Pods_AESStream_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AESStream_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5368C6B759BB36FF5C56C99 /* Pods-AESStream_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AESStream_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AESStream_Example/Pods-AESStream_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		D80EB8551FD1E8D4003C607D /* StdTypesExtensionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StdTypesExtensionsTests.swift; sourceTree = "<group>"; };
+		D81959D91FD7FFCB005E6E25 /* FileOutputStreamTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileOutputStreamTests.swift; sourceTree = "<group>"; };
+		D81959DB1FD801A9005E6E25 /* URL+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Extensions.swift"; sourceTree = "<group>"; };
 		D82FE62E1FD42E2500D1F198 /* AesInputStreamTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AesInputStreamTests.swift; sourceTree = "<group>"; };
 		D82FE6301FD438F400D1F198 /* plaintext.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = plaintext.txt; sourceTree = "<group>"; };
 		D82FE6321FD43A1200D1F198 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -103,6 +108,7 @@
 			children = (
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				607FACD71AFB9204008FA782 /* ViewController.swift */,
+				D81959DB1FD801A9005E6E25 /* URL+Extensions.swift */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
@@ -125,6 +131,7 @@
 			children = (
 				D80EB8551FD1E8D4003C607D /* StdTypesExtensionsTests.swift */,
 				D82FE62E1FD42E2500D1F198 /* AesInputStreamTests.swift */,
+				D81959D91FD7FFCB005E6E25 /* FileOutputStreamTests.swift */,
 				D82FE6321FD43A1200D1F198 /* Constants.swift */,
 				D82FE6301FD438F400D1F198 /* plaintext.txt */,
 				D82FE6361FD45E0500D1F198 /* encryptedtext.aes */,
@@ -392,6 +399,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
+				D81959DC1FD801A9005E6E25 /* URL+Extensions.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -402,6 +410,8 @@
 			files = (
 				D82FE62F1FD42E2500D1F198 /* AesInputStreamTests.swift in Sources */,
 				D80EB8561FD1E8D4003C607D /* StdTypesExtensionsTests.swift in Sources */,
+				D81959DD1FD802C1005E6E25 /* URL+Extensions.swift in Sources */,
+				D81959DA1FD7FFCB005E6E25 /* FileOutputStreamTests.swift in Sources */,
 				D82FE6331FD43A1200D1F198 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
