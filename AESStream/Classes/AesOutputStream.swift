@@ -16,9 +16,9 @@ public enum AesOutputStreamError: Error {
 }
 
 public class AesOutputStream: OutputStream {
-    var bufferSize = 1024
+    var bufferSize = 0
     var cryptorRef: CCCryptorRef?
-    var cryptorBuffer: UnsafeMutablePointer<UInt8>
+    var cryptorBuffer = UnsafeMutablePointer<UInt8>.allocate(capacity: 0)
     let outputStream: OutputStream
 
     public init(with outputStream: OutputStream, key: Data, vector: Data) throws {
@@ -28,7 +28,7 @@ public class AesOutputStream: OutputStream {
 
         self.outputStream = outputStream
 
-        var keyPtr = UnsafeMutablePointer<UInt8>.allocate(capacity: key.count)
+        let keyPtr = UnsafeMutablePointer<UInt8>.allocate(capacity: key.count)
         key.copyBytes(to: keyPtr, count: key.count)
 
         let vectorPtr = UnsafeMutablePointer<UInt8>.allocate(capacity: vector.count)
@@ -36,9 +36,9 @@ public class AesOutputStream: OutputStream {
 
         // CBC mode is selected by the absence of the kCCOptionECBMode bit in the options flags
         let result: CCCryptorStatus = CCCryptorCreate(CCOperation(kCCEncrypt),
-                                                      CCAlgorithm(kCCAlgorithmAES),
+                                                      CCAlgorithm(kCCAlgorithmAES128),
                                                       CCOptions(kCCOptionPKCS7Padding),
-                                                      &keyPtr,
+                                                      keyPtr,
                                                       key.count,
                                                       vectorPtr,
                                                       &cryptorRef)
@@ -49,8 +49,6 @@ public class AesOutputStream: OutputStream {
 
         keyPtr.deallocate(capacity: key.count)
         vectorPtr.deallocate(capacity: vector.count)
-
-        cryptorBuffer = UnsafeMutablePointer<UInt8>.allocate(capacity: bufferSize)
     }
 
     deinit {
@@ -58,10 +56,12 @@ public class AesOutputStream: OutputStream {
     }
 
     public var hasSpaceAvailable: Bool {
-        return true
+        return outputStream.hasSpaceAvailable
     }
 
     public func write(_ buffer: UnsafePointer<UInt8>, maxLength len: Int) -> Int {
+        validateBufferSizeForEncryptingData(ofLength: len)
+
         var encryptedBytes = 0
         let cryptorStatus = CCCryptorUpdate(cryptorRef,
                                             buffer,
@@ -74,7 +74,7 @@ public class AesOutputStream: OutputStream {
             return 0
         }
 
-        return outputStream.write(buffer, maxLength:encryptedBytes)
+        return outputStream.write(cryptorBuffer, maxLength:encryptedBytes)
     }
 
     public func close() {
@@ -91,7 +91,11 @@ public class AesOutputStream: OutputStream {
         _ = outputStream.write(cryptorBuffer, maxLength:encryptedBytes)
     }
 
-    func validateBufferForEncrypting(withCapacity: Int) {
-
+    func validateBufferSizeForEncryptingData(ofLength: Int) {
+        if bufferSize < ofLength {
+            cryptorBuffer.deallocate(capacity: bufferSize)
+            cryptorBuffer = UnsafeMutablePointer<UInt8>.allocate(capacity: ofLength)
+            bufferSize = ofLength
+        }
     }
 }

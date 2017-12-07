@@ -22,6 +22,7 @@
 		D82FE6311FD438F400D1F198 /* plaintext.txt in Resources */ = {isa = PBXBuildFile; fileRef = D82FE6301FD438F400D1F198 /* plaintext.txt */; };
 		D82FE6331FD43A1200D1F198 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82FE6321FD43A1200D1F198 /* Constants.swift */; };
 		D82FE6371FD45E0500D1F198 /* encryptedtext.aes in Resources */ = {isa = PBXBuildFile; fileRef = D82FE6361FD45E0500D1F198 /* encryptedtext.aes */; };
+		D84D340A1FD729C100EBFE6E /* AesIOStreamTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84D34091FD729C100EBFE6E /* AesIOStreamTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +61,7 @@
 		D82FE6301FD438F400D1F198 /* plaintext.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = plaintext.txt; sourceTree = "<group>"; };
 		D82FE6321FD43A1200D1F198 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		D82FE6361FD45E0500D1F198 /* encryptedtext.aes */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; path = encryptedtext.aes; sourceTree = "<group>"; };
+		D84D34091FD729C100EBFE6E /* AesIOStreamTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AesIOStreamTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,6 +134,7 @@
 				D80EB8551FD1E8D4003C607D /* StdTypesExtensionsTests.swift */,
 				D82FE62E1FD42E2500D1F198 /* AesInputStreamTests.swift */,
 				D81959D91FD7FFCB005E6E25 /* FileOutputStreamTests.swift */,
+				D84D34091FD729C100EBFE6E /* AesIOStreamTests.swift */,
 				D82FE6321FD43A1200D1F198 /* Constants.swift */,
 				D82FE6301FD438F400D1F198 /* plaintext.txt */,
 				D82FE6361FD45E0500D1F198 /* encryptedtext.aes */,
@@ -409,6 +412,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D82FE62F1FD42E2500D1F198 /* AesInputStreamTests.swift in Sources */,
+				D84D340A1FD729C100EBFE6E /* AesIOStreamTests.swift in Sources */,
 				D80EB8561FD1E8D4003C607D /* StdTypesExtensionsTests.swift in Sources */,
 				D81959DD1FD802C1005E6E25 /* URL+Extensions.swift in Sources */,
 				D81959DA1FD7FFCB005E6E25 /* FileOutputStreamTests.swift in Sources */,

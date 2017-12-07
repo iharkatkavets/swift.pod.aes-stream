@@ -7,21 +7,21 @@
 
 import Foundation
 
-class DataOutputStream: OutputStream {
+public class DataOutputStream: OutputStream {
     public private(set) var data: Data = Data()
 
-    var hasSpaceAvailable: Bool {
+    public var hasSpaceAvailable: Bool {
         return true
     }
 
-    init() {
+    public init() {
     }
 
-    func write(_ buffer: UnsafePointer<UInt8>, maxLength len: Int) -> Int {
+    public func write(_ buffer: UnsafePointer<UInt8>, maxLength len: Int) -> Int {
         data.append(buffer, count: len)
         return len
     }
 
-    func close() {
+    public func close() {
     }
 }
