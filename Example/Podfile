@@ -2,15 +2,15 @@ use_frameworks!
 platform :ios, '9.0'
 
 target 'AESStream_Example' do
-    #  pod 'AESStream', :git => 'https://github.com/igorkotkovets/swift.pod.aes-stream.git'
-  pod 'AESStream', :path => '../'
+  pod 'AESStream', :git => 'https://github.com/igorkotkovets/swift.pod.aes-stream.git'
+  #  pod 'AESStream', :path => '../'
   pod 'SwiftLint'
 end
 
 target 'AESStream_Tests' do
     inherit! :search_paths
-    #    pod 'AESStream', :git => 'https://github.com/igorkotkovets/swift.pod.aes-stream.git'
-    pod 'AESStream', :path => '../'
+    pod 'AESStream', :git => 'https://github.com/igorkotkovets/swift.pod.aes-stream.git'
+    #    pod 'AESStream', :path => '../'
     pod 'CleanTests', :git => 'https://github.com/igorkotkovets/pod.swift.clean-tests.git'
 
 end
