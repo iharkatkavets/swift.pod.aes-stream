@@ -44,11 +44,11 @@ public class DataOutputStream: OutputStream {
     public init() {
     }
 
-    public func write(_ buffer: UnsafePointer<UInt8>, maxLength len: Int) -> Int {
+    public func write(_ buffer: UnsafePointer<UInt8>, maxLength len: Int) throws -> Int {
         data.append(buffer, count: len)
         return len
     }
 
-    public func close() {
+    public func close() throws {
     }
 }

@@ -29,7 +29,7 @@ class FileOutputStreamTests: XCTestCase {
                     let fileOutputStream = FileOutputStream(with: fileHandle)
                     let buffer = UnsafeMutablePointer<UInt8>.allocate(capacity: 100)
                     buffer.initialize(to: 3, count: 100)
-                    _ = fileOutputStream.write(buffer, maxLength: 100)
+                    _ = try fileOutputStream.write(buffer, maxLength: 100)
                     buffer.deallocate(capacity: 100)
                 }
 

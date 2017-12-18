@@ -167,6 +167,9 @@ public enum AesOutputStreamError: Error {
     case creatingCryptorError
     case decryptingDataError
     case finishingDecriptingError
+
+    case failFinishEncrypt(CCCryptorStatus)
+    case failProcessData(CCCryptorStatus)
 }
 
 public class AesOutputStream: OutputStream {
@@ -213,7 +216,7 @@ public class AesOutputStream: OutputStream {
         return outputStream.hasSpaceAvailable
     }
 
-    public func write(_ buffer: UnsafePointer<UInt8>, maxLength len: Int) -> Int {
+    public func write(_ buffer: UnsafePointer<UInt8>, maxLength len: Int) throws -> Int {
         validateBufferSizeForEncryptingData(ofLength: len)
 
         var encryptedBytes = 0
@@ -225,13 +228,13 @@ public class AesOutputStream: OutputStream {
                                             &encryptedBytes)
         guard cryptorStatus == CCCryptorStatus(kCCSuccess) else {
             print(cryptorStatus.description())
-            return 0
+            throw AesOutputStreamError.failProcessData(cryptorStatus)
         }
 
-        return outputStream.write(cryptorBuffer, maxLength:encryptedBytes)
+        return try outputStream.write(cryptorBuffer, maxLength:encryptedBytes)
     }
 
-    public func close() {
+    public func close() throws {
         var encryptedBytes = 0
         let cryptorStatus = CCCryptorFinal(cryptorRef,
                                            cryptorBuffer,
@@ -239,10 +242,10 @@ public class AesOutputStream: OutputStream {
                                            &encryptedBytes)
         guard cryptorStatus == CCCryptorStatus(kCCSuccess) else {
             print(cryptorStatus.description())
-            return
+            throw AesOutputStreamError.failFinishEncrypt(cryptorStatus)
         }
 
-        _ = outputStream.write(cryptorBuffer, maxLength:encryptedBytes)
+        _ = try outputStream.write(cryptorBuffer, maxLength:encryptedBytes)
     }
 
     func validateBufferSizeForEncryptingData(ofLength: Int) {

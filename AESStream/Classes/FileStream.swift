@@ -41,11 +41,11 @@ public class FileOutputStream: OutputStream {
         self.fileHandle = fileHandle
     }
 
-    public func write(_ buffer: UnsafePointer<UInt8>, maxLength len: Int) -> Int {
+    public func write(_ buffer: UnsafePointer<UInt8>, maxLength len: Int) throws -> Int {
         let data = Data(bytes: buffer, count: len)
         fileHandle.write(data)
         return len
     }
 
-    public func close() { }
+    public func close() throws { }
 }

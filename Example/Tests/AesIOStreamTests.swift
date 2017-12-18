@@ -32,8 +32,8 @@ class AesIOStreamTests: XCTestCase {
 
             let dataOutputStream = DataOutputStream()
             let aesOutputStream = try AesOutputStream(with: dataOutputStream, key: key, vector: vector)
-            _ = aesOutputStream.write(originData, maxLength: originDataLength)
-            aesOutputStream.close()
+            _ = try aesOutputStream.write(originData, maxLength: originDataLength)
+            try aesOutputStream.close()
 
             let dataInputStream = DataInputStream(withData: dataOutputStream.data)
             let decryptedDataBuffer = UnsafeMutablePointer<UInt8>.allocate(capacity: originDataLength)
