@@ -25,31 +25,35 @@ public class AesInputStream: InputStream {
     var inputBuffer = UnsafeMutablePointer<UInt8>.allocate(capacity: AesInputStream.aesBufferSize)
     var outputBuffer = UnsafeMutablePointer<UInt8>.allocate(capacity: AesInputStream.aesBufferSize)
 
-    public init(with inputStream: InputStream, key: Data, vector: Data) throws {
-        guard key.count == 32 && vector.count == 16 else {
+    public init(with inputStream: InputStream, key: UnsafePointer<UInt8>, length: Int, vector: UnsafePointer<UInt8>) throws {
+        guard length == 32 || length == 16 else {
             throw AesInputStreamError.invalidKeySize
         }
 
         self.inputStream = inputStream
 
+        // CBC mode is selected by the absence of the kCCOptionECBMode bit in the options flags
+        let result: CCCryptorStatus = CCCryptorCreate(CCOperation(kCCDecrypt),
+                                                      CCAlgorithm(kCCAlgorithmAES128),
+                                                      CCOptions(kCCOptionPKCS7Padding),
+                                                      key,
+                                                      length,
+                                                      vector,
+                                                      &cryptorRef)
+        guard result == CCCryptorStatus(kCCSuccess) else {
+            print(result.description())
+            throw AesInputStreamError.creatingCryptorError
+        }
+    }
+
+    public convenience init(with inputStream: InputStream, key: Data, vector: Data) throws {
         let keyPtr = UnsafeMutablePointer<UInt8>.allocate(capacity: key.count)
         key.copyBytes(to: keyPtr, count: key.count)
 
         let vectorPtr = UnsafeMutablePointer<UInt8>.allocate(capacity: vector.count)
         vector.copyBytes(to: vectorPtr, count: vector.count)
 
-        // CBC mode is selected by the absence of the kCCOptionECBMode bit in the options flags
-        let result: CCCryptorStatus = CCCryptorCreate(CCOperation(kCCDecrypt),
-                                                      CCAlgorithm(kCCAlgorithmAES128),
-                                                      CCOptions(kCCOptionPKCS7Padding),
-                                                      keyPtr,
-                                                      key.count,
-                                                      vectorPtr,
-                                                      &cryptorRef)
-        guard result == CCCryptorStatus(kCCSuccess) else {
-            print(result.description())
-            throw AesInputStreamError.creatingCryptorError
-        }
+        try self.init(with: inputStream, key: keyPtr, length: key.count, vector: vectorPtr)
 
         keyPtr.deallocate(capacity: key.count)
         vectorPtr.deallocate(capacity: vector.count)
@@ -178,31 +182,34 @@ public class AesOutputStream: OutputStream {
     var cryptorBuffer = UnsafeMutablePointer<UInt8>.allocate(capacity: 0)
     let outputStream: OutputStream
 
-    public init(with outputStream: OutputStream, key: Data, vector: Data) throws {
-        guard key.count == 32 && vector.count == 16 else {
+    public init(with outputStream: OutputStream, key: UnsafePointer<UInt8>, length: Int, vector: UnsafePointer<UInt8>) throws {
+        guard length == 32 || length == 16 else {
             throw AesInputStreamError.invalidKeySize
         }
 
         self.outputStream = outputStream
+        // CBC mode is selected by the absence of the kCCOptionECBMode bit in the options flags
+        let result: CCCryptorStatus = CCCryptorCreate(CCOperation(kCCEncrypt),
+                                                      CCAlgorithm(kCCAlgorithmAES128),
+                                                      CCOptions(kCCOptionPKCS7Padding),
+                                                      key,
+                                                      length,
+                                                      vector,
+                                                      &cryptorRef)
+        guard result == CCCryptorStatus(kCCSuccess) else {
+            print(result.description())
+            throw AesInputStreamError.creatingCryptorError
+        }
+    }
 
+    public convenience init(with outputStream: OutputStream, key: Data, vector: Data) throws {
         let keyPtr = UnsafeMutablePointer<UInt8>.allocate(capacity: key.count)
         key.copyBytes(to: keyPtr, count: key.count)
 
         let vectorPtr = UnsafeMutablePointer<UInt8>.allocate(capacity: vector.count)
         vector.copyBytes(to: vectorPtr, count: vector.count)
 
-        // CBC mode is selected by the absence of the kCCOptionECBMode bit in the options flags
-        let result: CCCryptorStatus = CCCryptorCreate(CCOperation(kCCEncrypt),
-                                                      CCAlgorithm(kCCAlgorithmAES128),
-                                                      CCOptions(kCCOptionPKCS7Padding),
-                                                      keyPtr,
-                                                      key.count,
-                                                      vectorPtr,
-                                                      &cryptorRef)
-        guard result == CCCryptorStatus(kCCSuccess) else {
-            print(result.description())
-            throw AesInputStreamError.creatingCryptorError
-        }
+        try self.init(with: outputStream, key: keyPtr, length: key.count, vector: vectorPtr)
 
         keyPtr.deallocate(capacity: key.count)
         vectorPtr.deallocate(capacity: vector.count)
