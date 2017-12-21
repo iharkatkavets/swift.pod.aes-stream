@@ -24,7 +24,7 @@ class StdTypesExtensionsTests: XCTestCase {
         buffer1.initialize(to: 1, count: 100)
         let buffer2 = UnsafeMutablePointer<UInt8>.allocate(capacity: 100)
         buffer2.initialize(to: 1, count: 100)
-        assertTrue(buffer1.compare(with: buffer2, size: 100))
+        assertTrue(buffer1.isEqual(to: buffer2, ofLength: 100))
     }
 
     func testThatReturnsFalseForDifferentMemory() {
@@ -32,7 +32,7 @@ class StdTypesExtensionsTests: XCTestCase {
         buffer1.initialize(to: 1, count: 100)
         let buffer2 = UnsafeMutablePointer<UInt8>.allocate(capacity: 100)
         buffer2.initialize(to: 2, count: 100)
-        assertFalse(buffer1.compare(with: buffer2, size: 100))
+        assertFalse(buffer1.isEqual(to: buffer2, ofLength: 100))
     }
 
     func testThatReturnsTrueForEqualMemoryDifferentTypes() {
@@ -40,8 +40,8 @@ class StdTypesExtensionsTests: XCTestCase {
         data.withUnsafeBytes { (bytes: UnsafePointer<UInt8>) -> Void in
             let buffer2 = UnsafeMutablePointer<UInt8>.allocate(capacity: 100)
             buffer2.initialize(to: 1, count: 100)
-            assertTrue(bytes.compare(with: buffer2, size: 100))
-            assertTrue(buffer2.compare(with: bytes, size: 100))
+            assertTrue(bytes.isEqual(to: buffer2, ofLength: 100))
+            assertTrue(buffer2.isEqual(to: bytes, ofLength: 100))
         }
     }
 
@@ -50,8 +50,22 @@ class StdTypesExtensionsTests: XCTestCase {
         data.withUnsafeBytes { (bytes: UnsafePointer<UInt8>) -> Void in
             let buffer2 = UnsafeMutablePointer<UInt8>.allocate(capacity: 100)
             buffer2.initialize(to: 1, count: 100)
-            assertFalse(bytes.compare(with: buffer2, size: 100))
-            assertFalse(buffer2.compare(with: bytes, size: 100))
+            assertFalse(bytes.isEqual(to: buffer2, ofLength: 100))
+            assertFalse(buffer2.isEqual(to: bytes, ofLength: 100))
         }
+    }
+
+    func testThatPrintValidHexString() {
+        let zerosMutPtr = UnsafeMutablePointer<UInt64>.allocate(capacity: 2)
+        zerosMutPtr.initialize(to: 0, count: 2)
+        assertPairsEqual(expected: "0x00000000000000000000000000000000", actual: zerosMutPtr.hexString(ofLength: 2))
+        let zerosPtr = UnsafePointer(zerosMutPtr)
+        assertPairsEqual(expected: "0x00000000000000000000000000000000", actual: zerosPtr.hexString(ofLength: 2))
+
+        let onesMutPtr = UnsafeMutablePointer<UInt32>.allocate(capacity: 2)
+        onesMutPtr.initialize(to: 1, count: 2)
+        assertPairsEqual(expected: "0x0100000001000000", actual: onesMutPtr.hexString(ofLength: 2))
+        let onesPtr = UnsafePointer(onesMutPtr)
+        assertPairsEqual(expected: "0x0100000001000000", actual: onesPtr.hexString(ofLength: 2))
     }
 }
