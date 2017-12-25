@@ -13,10 +13,17 @@ import AESStream
 class StdTypesExtensionsTests: XCTestCase {
     
     func testThatPrintHexStringForUnsignedIntegerTypes() {
-        assertPairsEqual(expected: "0x0f", actual: UInt8(15).hexString())
-        assertPairsEqual(expected: "0x0f00", actual: UInt16(15).hexString())
-        assertPairsEqual(expected: "0x0f000000", actual: UInt32(15).hexString())
-        assertPairsEqual(expected: "0x0f00000000000000", actual: UInt(15).hexString())
+        assertPairsEqual(expected: "0x0f", actual: UInt8(15).hexString(withAdding: "0x"))
+        assertPairsEqual(expected: "0x0f00", actual: UInt16(15).hexString(withAdding: "0x"))
+        assertPairsEqual(expected: "0x0f000000", actual: UInt32(15).hexString(withAdding: "0x"))
+        assertPairsEqual(expected: "0x0f00000000000000", actual: UInt(15).hexString(withAdding: "0x"))
+
+        let data0 = Data(hex: "b99c32c6dd66a3ecd94d4bae80334ede90d4fa0e247de8a0587e72197e1561bb")!
+        data0.withUnsafeBytes { (bytes: UnsafePointer<UInt8>) -> Void in
+            assertPairsEqual(expected: "b99c32c6dd66a3ecd94d4bae80334ede90d4fa0e247de8a0587e72197e1561bb",
+                             actual: bytes.hexString(ofLength: data0.count))
+        }
+
     }
 
     func testThatReturnsTrueForEqualMemory() {

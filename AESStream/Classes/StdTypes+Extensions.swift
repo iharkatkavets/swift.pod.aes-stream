@@ -8,7 +8,7 @@
 import Foundation
 
 public extension FixedWidthInteger {
-    func hexString(withAdding prefix: String? = "0x") -> String {
+    func hexString(withAdding prefix: String? = nil) -> String {
         var copy = self
 
         return withUnsafePointer(to: &copy) { ptr -> String in
@@ -93,7 +93,7 @@ public extension UnsafeMutablePointer where Pointee: FixedWidthInteger {
         return true
     }
 
-    public func hexString(ofLength len: Int, withAdding prefix: String? = "0x") -> String {
+    public func hexString(ofLength len: Int, withAdding prefix: String? = nil) -> String {
         let count = MemoryLayout<Pointee>.size
         return self.withMemoryRebound(to: UInt8.self, capacity: count) { (bytes) -> String in
             var str: String = prefix ?? ""
@@ -122,7 +122,7 @@ public extension UnsafePointer where Pointee: FixedWidthInteger {
         return true
     }
 
-    public func hexString(ofLength len: Int, withAdding prefix: String? = "0x") -> String {
+    public func hexString(ofLength len: Int, withAdding prefix: String? = nil) -> String {
         let count = MemoryLayout<Pointee>.size
         return self.withMemoryRebound(to: UInt8.self, capacity: count) { (bytes) -> String in
             var str: String = prefix ?? ""
