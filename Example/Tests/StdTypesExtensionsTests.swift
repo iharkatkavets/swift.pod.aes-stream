@@ -65,14 +65,14 @@ class StdTypesExtensionsTests: XCTestCase {
     func testThatPrintValidHexString() {
         let zerosMutPtr = UnsafeMutablePointer<UInt64>.allocate(capacity: 2)
         zerosMutPtr.initialize(to: 0, count: 2)
-        assertPairsEqual(expected: "0x00000000000000000000000000000000", actual: zerosMutPtr.hexString(ofLength: 2))
+        assertPairsEqual(expected: "00000000000000000000000000000000", actual: zerosMutPtr.hexString(ofLength: 2))
         let zerosPtr = UnsafePointer(zerosMutPtr)
-        assertPairsEqual(expected: "0x00000000000000000000000000000000", actual: zerosPtr.hexString(ofLength: 2))
+        assertPairsEqual(expected: "00000000000000000000000000000000", actual: zerosPtr.hexString(ofLength: 2))
 
         let onesMutPtr = UnsafeMutablePointer<UInt32>.allocate(capacity: 2)
         onesMutPtr.initialize(to: 1, count: 2)
-        assertPairsEqual(expected: "0x0100000001000000", actual: onesMutPtr.hexString(ofLength: 2))
+        assertPairsEqual(expected: "0100000001000000", actual: onesMutPtr.hexString(ofLength: 2))
         let onesPtr = UnsafePointer(onesMutPtr)
-        assertPairsEqual(expected: "0x0100000001000000", actual: onesPtr.hexString(ofLength: 2))
+        assertPairsEqual(expected: "0100000001000000", actual: onesPtr.hexString(ofLength: 2))
     }
 }
